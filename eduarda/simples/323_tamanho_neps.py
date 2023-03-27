@@ -7,4 +7,4 @@ for num in numeros_list:
     if(float(num) > maior):
         maior = float(num)
 
-print(maior)
+print(int(maior))
