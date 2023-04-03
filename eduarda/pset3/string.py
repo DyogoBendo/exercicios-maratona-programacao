@@ -1,5 +1,5 @@
 def max_beauty(str, ltr, k, n):
-    start = max_len = window_len = changes = 0
+    start = max_len = current_length = changes = 0
     for end in range(n):
         if str[end] == ltr:
             changes+=1
@@ -7,8 +7,8 @@ def max_beauty(str, ltr, k, n):
             if str[start-1] == ltr:
                 changes -= 1
             start+=1
-        window_len = end - (start - 1)
-        max_len = max(max_len, window_len)
+        current_length = end - (start - 1)
+        max_len = max(max_len, current_length)
     return max_len
 
 
