@@ -4,7 +4,7 @@ def max_beauty(str, ltr, k, n):
         if str[end] == ltr:
             changes+=1
         while(changes > k):
-            if str[start-1] == ltr:
+            if str[start] == ltr:
                 changes -= 1
             start+=1
         current_length = end - (start - 1)
