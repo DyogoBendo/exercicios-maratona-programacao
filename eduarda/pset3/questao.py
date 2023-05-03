@@ -1,6 +1,5 @@
 
 def solving_function(list, n):
-    #get all of the values inside of the list that are greater than n
     new_list = [value for value in list if value > n]
     count = len(new_list)
     return count
