@@ -1,2 +1,14 @@
-n, h = map(int, input().split())
 
+
+n, y = map(int, input().split())
+
+
+
+    
+
+
+        
+
+    
+
+ 
