@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> starts;
+vector<int> starts, answer;
 vector<lib> libs;
 struct lib{
     int end, index;
@@ -20,6 +20,19 @@ int main(){
         libs.push_back(lib{y, i});
     }
     sort(libs.begin(), libs.end());
-    int current=n;
-     
+    int current=n, i=0, index=0;
+    string result = "YES";
+    while (current){
+        if (i == n || current > libs[i].end){
+            result = "NO";
+            current = 0;
+        }
+        else {
+            answer.push_back(libs[i].index);
+            current = starts[libs[i].index];
+            index = libs[i].index;
+        }
+    }
 }
+
+//save the index
