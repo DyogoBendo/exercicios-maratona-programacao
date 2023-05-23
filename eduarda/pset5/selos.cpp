@@ -18,14 +18,21 @@ void crivo(){
 }
 
 int main(){
-    long long n;
+    int n;
     cin >> n;
+    long long a,b,c;
+    cin >> a >> b >> c;
+    vector<long long> values = {a, b, c};
     crivo();
-    char result = 'N';
-    for(int p : primo){
-        if(p != n && n%p == 0){
-            result = 'S';
+    for(auto v : values){
+        for(int p : primo){
+            if(sqrt(v) < p) break;
+            else if(sqrt(v) == p) {
+                cout << "YES" << endl;
+            }else{
+                cout << "NO" << endl;
+            }
         }
     }
-    cout << result;
+    
 }
