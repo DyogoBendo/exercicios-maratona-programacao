@@ -3,7 +3,6 @@
 typedef long long num;
 using namespace std;
 
-
 int M,n;
 const int MODN = 1000000007;
 

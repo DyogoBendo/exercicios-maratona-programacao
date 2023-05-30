@@ -24,7 +24,6 @@ void initialise(){
 bool segment[1000009];
 
 
-
 int main()
 {
     int t;
