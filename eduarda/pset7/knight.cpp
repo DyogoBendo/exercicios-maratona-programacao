@@ -7,11 +7,11 @@ int dy[8] = {2, 2, 1, 1, -2, -2, -1, -1};
 queue<pair<int, int>> q; 
 int matrix[8][8];
 
-bool valid(int nx, int ny){
-    if(!nx && !ny) return false;
-
-    if(nx >= 8 || nx < 0) return false;
-    if(ny >= 8 || ny < 0) return false;
+bool valid(pair<int, int> a, int mx, int my){
+    int x = a.first + mx;
+    int y = a.second + my;
+    if (x >= 8 || x < 0) return false;
+    if (y >= 8 || y < 0) return false;
     return true;
 }
 
@@ -32,15 +32,15 @@ int main(){
 
         q.push(make_pair(x1 - 'a', y1 - 1));
         matrix[x1 - 'a'][y1 - 1] = 0;
-        pair<int, int> aux;
+        pair<int, int> aux, s;
         while(!q.empty()){
             aux = q.front(); q.pop();
             for(int i = 0; i < 8; i++){
-                int nx = aux.first + dx[i];
-                int ny = aux.second + dy[i];
-                if(valid(nx, ny) && matrix[nx][ny] == -1){
-                    matrix[nx][ny] = matrix[aux.first][aux.second] + 1;
-                    q.push({nx, ny});
+                if (!valid(aux, dx[i], dy[i])) continue;
+                s = {aux.first+dx[i], aux.second+dy[i]};
+                if(matrix[s.first][s.second] == -1){
+                    matrix[s.first][s.second] = matrix[aux.first][aux.second] + 1;
+                    q.push(s);
                 }
             }
         }
