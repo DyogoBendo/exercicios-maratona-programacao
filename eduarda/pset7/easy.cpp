@@ -10,7 +10,7 @@ int main(){
     for(int t = 0; t < test; t++){
         int v, k;
         cin >> v >> k;
-        queue<pair<int, int>> q; 
+        priority_queue<pair<int, int>> q; 
         vector<pair<int, int>> matrix[v];
         vector<int> visited(v, false);
         for(int j = 0; j < k; j++){
@@ -19,7 +19,6 @@ int main(){
             a--;
             b--;
             matrix[a].push_back(make_pair(b, c));
-            matrix[b].push_back(make_pair(a, c));
         }
 
         int start, end;
@@ -35,7 +34,7 @@ int main(){
         distance[start] = 0;
         q.push({start, 0});
         while(!q.empty()){
-            int a = q.front().first; q.pop();
+            int a = q.top().first; q.pop();
             if(visited[a]) continue;
             visited[a] = true;
             for(auto neighbor : matrix[a]){
