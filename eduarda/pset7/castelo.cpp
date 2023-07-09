@@ -1,83 +1,66 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAX 100000
 
-vector<int> g[MAX + 9];
-int check[MAX + 9];
-int maxD[MAX + 1];
-int parent[MAX + 1];  // Store the parent of each node
+void bfs(vector<vector<int>> &graph, int start, int n, int end, vector<int> &colors, int color){
+    queue<int> q;
+    vector<bool> visited(n);
+    vector<int> parent(n);
+    q.push(start);
+    int current;
+    visited[start] = true;
+    parent[start] = -1;
 
-void bfs(int n) {
-    queue<pair<int, int>> q;
-    q.push({n, 0});
-    while (!q.empty()) {
-        int root = q.front().first;
-        int d = q.front().second;
-        check[root] = true;
-        for (int i = 0; i < g[root].size(); i++) {
-            if (!check[g[root][i]]) {
-                q.push({g[root][i], d + 1});
-                parent[g[root][i]] = root;  // Store the parent of the child node
+    while(!q.empty()){
+        current = q.front(); q.pop();
+
+        if(current == end){
+            break;
+        }
+    
+        for(auto neighbor : graph[current]){
+            if(!visited[neighbor]){
+                visited[neighbor] = true;
+                q.push(neighbor);
+                parent[neighbor] = current;
             }
         }
-        maxD[root] = d;
-        q.pop();
+    }
+
+    while(current != -1){
+        colors[current] = color;
+        current = parent[current];
     }
 }
-
-vector<int> getShortestPath(int source, int destination) {
-    vector<int> path;
-    int current = destination;
-    while (current != source) {
-        path.push_back(current);
-        current = parent[current];  // Move to the parent node
-    }
-    path.push_back(source);
-    reverse(path.begin(), path.end());  // Reverse the path to get the correct order
-    return path;
-}
-
 int main() {
-    int n, a, b;
-    cin >> n;
-    vector<pair<int, int>> v[n + 9];
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> v(n);
     for (int i = 0; i < n - 1; i++) {
+        int a, b;
         cin >> a >> b;
         a--;
         b--;
-        g[a].push_back(b);
-        g[b].push_back(a);
+        v[a].push_back(b);
+        v[b].push_back(a);
     }
 
-    bfs(1);
-    int maxRoot = 0;
-    for (int i = 1; i <= n; i++) {
-        maxRoot = maxD[maxRoot] < maxD[i] ? i : maxRoot;
+    vector<int> colors(n);
+    for (int i = 0; i < m; i++)
+    {
+        int s, e, c;
+        cin >> s >> e >> c;
+        s--;
+        e--;
+        bfs(v, s, n, e, colors, c);
     }
 
-    memset(maxD, 0, sizeof(maxD));
-    memset(check, 0, sizeof(check));
-    memset(parent, 0, sizeof(parent));
-
-    bfs(maxRoot);
-    maxRoot = 0;
-    for (int i = 1; i <= n; i++) {
-        maxRoot = max(maxRoot, maxD[i]);
-    }
-
-    cout << maxRoot << endl;
-
-    // Find the shortest path between two nodes
-    int source, destination;
-    cout << "Enter the source and destination nodes: ";
-    cin >> source >> destination;
-    vector<int> shortestPath = getShortestPath(source, destination);
-    cout << "Shortest Path: ";
-    for (int node : shortestPath) {
-        cout << node << " ";
+    for (int p : colors)
+    {
+        cout << p << " ";
     }
     cout << endl;
+
 
     return 0;
 }
